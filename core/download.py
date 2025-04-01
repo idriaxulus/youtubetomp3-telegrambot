@@ -16,7 +16,7 @@ def get_video_title(url:str):
 def download_audio(url:str):
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': 'downloads/%(title)s.%(ext)s',
+        'outtmpl': 'downloads/track.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -25,4 +25,4 @@ def download_audio(url:str):
     }
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
-        return f"downloads/{info['title']}.mp3"
+        return f"downloads/track.mp3"
