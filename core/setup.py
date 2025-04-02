@@ -2,7 +2,7 @@ import asyncio
 import logging
 import os
 
-from aiogram import Bot, Dispatcher, Router, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.types import FSInputFile
 from aiogram.filters import Command
 
@@ -14,7 +14,6 @@ logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=TOKEN)
 disp = Dispatcher()
-router = Router(name=__name__)
 
 
 @disp.message(Command("start"))
