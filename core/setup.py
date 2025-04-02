@@ -3,7 +3,7 @@ import logging
 import os
 
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import FSInputFile, InputMediaAudio
+from aiogram.types import FSInputFile
 from aiogram.filters import Command
 
 from .config import TOKEN
@@ -34,20 +34,16 @@ async def message_handler(message: types.Message):
 
         # Download the audio file
         path = await asyncio.to_thread(download_audio, message.text)
-        print('------------------ THE PATH IS ' + path)
-
-        # Check if the file exists
-        if not os.path.exists(path):
-            await message.answer("The audio file could not be found. Please try again.")
-            return
 
         # Send the audio file
         await bot.send_audio(
             chat_id=message.chat.id,
-            audio=FSInputFile(path=path),
-            caption=f'Here is your audio file: "{title}"',
+            audio=FSInputFile(path=path, filename=title),
             reply_to_message_id=message.message_id
         )
+
+        # Remove the file after sending
+        os.remove(path)
     else:
         await message.answer(f'Please send me a valid Youtube link.')
 
